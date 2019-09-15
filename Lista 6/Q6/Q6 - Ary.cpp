@@ -26,11 +26,16 @@ void empilhar ( struct Pilha *p, char v){
 
 }
 
-int estacheia ( struct Pilha *p ){
-	if (p->topo == p->capa - 1)
-		return 1;
-	else
-		return 0;
+int estavazia ( struct Pilha *p ){
+
+   if( p-> topo == -1 )
+
+      return 1;   // true
+
+   else
+
+      return 0;   // false
+
 }
 
 char desempilhar ( struct Pilha *p ){
@@ -43,27 +48,29 @@ char desempilhar ( struct Pilha *p ){
 
 void hannoi(struct Pilha *p){
     char aux;
-    while(estacheia(&Pilha)){
+    while(estavazia(&Pilha) == false){
         aux = desempilhar();
         if (aux[0] == 1){
-            cout<<"AAAAAAAAAA";
+            cout<<"Move de "<<aux[1] <<" para "<<aux[2]<<endl;
         }else{
             if(aux[4] == 0){
+                aux[0] =- 1;
                 aux[2] = 'P3';
                 aux[3] = 'P2';
                 aux[4] = 1;
                 empilha(aux);
-                cout<<" BBBBBBBBB";
+                cout<<"Move de "<<aux[1] <<" para "<<aux[2]<<endl;
 
             }else{
+                aux[0] =- 1;
                 aux[1] = 'P3'
                 aux[2] = 'P2';
                 aux[3] = 'P1';
                 aux[4] = 0;
                 empilha(aux);
-                cout<<" CCCCCCCCC";
             }
         }
+    }
 }
 
 int main(){
