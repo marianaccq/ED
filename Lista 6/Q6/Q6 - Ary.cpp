@@ -3,55 +3,65 @@
 #include <iostream>
 #include <string>
 using namespace std;
-struct Pilha {
+typedef struct Pilha {
 
 	int topo;
 	int capa;
-	float *pElem;
+	int *pElem[5];
 
-};
+} Nop;
 
-void criarpilha( struct Pilha *p, int c ){
+void criarpilha( Nop *p, int c ){
 
    p->topo = -1;
    p->capa = c;
-   p->pElem = (float*) malloc (c * sizeof(float));
+   p->pElem[0] = new int();
+   p->pElem[1] = new int();
+   p->pElem[2] = new int();
+   p->pElem[3] = new int();
+   p->pElem[4] = new int();
 
 }
 
-void empilhar ( struct Pilha *p, char v){
-
+void empilhar ( Nop *p, int chave, int p1, int p2, int p3, int flag){
 	p->topo++;
-	p->pElem [p->topo] = v;
+	p->pElem[0] [p->topo] = chave;
+	p->pElem[1] [p->topo] = p1;
+	p->pElem[2] [p->topo] = p2;
+	p->pElem[3] [p->topo] = p3;
+	p->pElem[4] [p->topo] = flag;
 
 }
 
-int estavazia ( struct Pilha *p ){
-
+int estavazia ( Nop *p ){
    if( p-> topo == -1 )
-
       return 1;   // true
-
    else
-
       return 0;   // false
-
 }
 
-char desempilhar ( struct Pilha *p ){
-
-   char aux = p->pElem [p->topo];
-   p->topo--;
-   return aux;
-
+int desempilhar ( Nop *p ){
+    int aux[5];
+    aux[0] = p->pElem[0] [p->topo];
+    aux[1] = p->pElem[1] [p->topo];
+    aux[2] = p->pElem[2] [p->topo];
+    aux[3] = p->pElem[3] [p->topo];
+    aux[4] = p->pElem[4] [p->topo];
+    p->topo--;
+    return *aux;
 }
 
-void hannoi(struct Pilha *p){
-    char aux;
-    while(estavazia(&Pilha) == false){
-        aux = desempilhar();
+void hannoi(int n){
+    Nop pilha;
+    criarpilha (&pilha, 100);
+    int p1=1, p2=2,p3=3,flag=0;
+    empilhar(&pilha,n,p1,p2,p3,flag);
+    int aux[5];
+    while(estavazia(&pilha)){
+        aux = pilha->pElem[0] [pilha->topo]
         if (aux[0] == 1){
             cout<<"Move de "<<aux[1] <<" para "<<aux[2]<<endl;
+            desempilhar(&pilha);
         }else{
             if(aux[4] == 0){
                 aux[0] =- 1;
@@ -74,12 +84,8 @@ void hannoi(struct Pilha *p){
 }
 
 int main(){
-	struct Pilha minhapilha;
 	int capacidade, op, cont = 0;
 	float valor;
-	criarpilha (&minhapilha, 100);
 	int n = 5;
-    char nome[n] = {3, 'P1', 'P2', 'P3', 0};
-    empilhar(&minhapilha, nome);
-    hannoi(&minhapilha);
+    hannoi(n);
 }
