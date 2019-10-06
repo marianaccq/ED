@@ -1,25 +1,22 @@
+
 #include <iostream>
 
 using namespace std;
 
-// To heapify a subtree rooted with node i which is
-// an index in arr[]. N is size of heap
-void descer(int arr[], int n, int i)
-{
-    int largest = i; // começamos pela raiz
-    int l = 2 * i + 1; // obtem o filho esquerdo de i
-    int r = 2 * i + 2; // obtem o filho direito de i
-    // se o filho esqurdo for maior que a raiz
-    if (l < n && arr[l] > arr[largest])
-        largest = l;
-    // se o filho esquedo tem prioridade maior que a raiz ou o filho esquerdo
-    if (r < n && arr[r] > arr[largest])
-        largest = r;
-    // se o de maior prioridade não for a raiz
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-        // realiza o procedimento recursivamente
-        descer(arr, n, largest);
+void descer(int H[],int n, int i){
+    int j= 2*i+1; // filho esquerdo
+    if(j<=n){
+        if(j<n){
+            if(H[j]>H[j-1]){
+                j++;
+            }
+        }
+        if(H[i]<H[j-1]){
+            int aux = H[i];
+            H[i]=H[j-1];
+            H[j-1]=aux;
+            descer(H,n, j-1);
+        }
     }
 }
 
@@ -50,7 +47,7 @@ int main()
     // 5    3
     //  / \
     // 2   4
-    int arr[] = { 10, 5, 3, 2, 4, 6, 8, 4};
+    int arr[] = { 10, 20, 45, 1, 5, 3, 2, 4, 6, 8, 4};
     int n = sizeof(arr) / sizeof(arr[0]);
     print(arr, n);
     cout<<"Ordenado pelo heapSort"<<endl;
