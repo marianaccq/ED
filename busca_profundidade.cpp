@@ -1,3 +1,4 @@
+
 #include <iostream>
 using namespace std;
 
@@ -25,18 +26,17 @@ void adicionarVertice(No *pt, int chave, int peso){
     pt->prox = prox;
 }
 
-void BP(No *lista[6], No *pt){
-    marca[pt->chave] = 1;
-    for(int i = 0; i<6; i++){
-        pt = lista[i];
-        if(pt->prox != NULL){
-            if(marca[pt->prox->chave] != 1){
-                marca[pt->prox->chave] = 1;
-                cout<<"Marcou aresta: "<<pt->prox->chave<<endl;
-                printMarca();
-                BP(lista, pt->prox);
-            }
+void BP(No *lista[6], int chave){
+    marca[chave] = 1;
+    No *pt = lista[chave]->prox;
+    while(pt != NULL){
+        if(marca[pt->chave] != 1){
+            marca[pt->chave] = 1;
+            cout<<"Marcou aresta: "<<pt->chave<<endl;
+            printMarca();
+            BP(lista, pt->chave);
         }
+    pt = pt->prox;
     }
 }
 
@@ -66,5 +66,5 @@ int main(){
     lista[4]->chave = 4;
     lista[5]->chave = 5;
     printMarca();
-    BP(lista, lista[0]);
+    BP(lista, 0);
 }
